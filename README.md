@@ -6,7 +6,7 @@ Floaty is a pure JavaScript library for adding dynamic, floating elements to you
 
 View a live demo [here](http://zuuby.io/floaty.html "Floaty Demo").
 
-
+![Floaty Demo Gif](https://github.com/adam-p/markdown-here/raw/master/floaty.gif "Floaty Demo Gif")
 
 ### Quick Start Guide
 
