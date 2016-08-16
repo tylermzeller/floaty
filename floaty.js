@@ -5,26 +5,21 @@ var x = 0, y = 0;
 var prevX, prevY;
 
 document.addEventListener('DOMContentLoaded', function(e) {
-   var floater = document.getElementById('floater');
+   var floater = document.getElementById('floaty');
    updatePosition(floater);
 
    floater.addEventListener('mouseover', function(e){
      mouse_over = true;
-     console.log('over');
    });
 
    floater.addEventListener('mousedown', function(e){
      mouse_clicked = true;
 
      addClass(floater, 'active');
-
-     console.log('down');
    });
 
    floater.addEventListener('mouseup', function(e){
      mouse_clicked = false;
-     console.log('up');
-
      removeClass(floater, 'active');
 
     var direction = calcMinDirection(this);
@@ -57,7 +52,6 @@ function snapback(element, direction){
 
   if ((left <= 0.5) || (top <= 0.5) || (top + 50 >= window.innerHeight - 1) || (left + 50 >= window.innerWidth - 1) || mouse_clicked){
     clearInterval(snapback_interval);
-    console.log('clear');
   }
 
   if (direction == 'left'){
