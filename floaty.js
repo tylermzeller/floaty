@@ -1,6 +1,35 @@
-// Author: Tyler Zeller
-
 var floaty = floaty || {};
+
+floaty.addFloaty = function(id){
+  if (id) {
+    var target = document.getElementById(id);
+    target.className += ' floaty';
+    this.makeFloaty(target);
+  } else {
+    var elemDiv = document.createElement('div');
+    elemDiv.className += ' floaty';
+    document.body.appendChild(elemDiv);
+    this.makeFloaty(elemDiv);
+  }
+};
+
+floaty.makeFloaty = function(element){
+  var floater = new floaty.floaty(element);
+
+  floater.addEventListener('mouseover', floaty.makeMouseoverCallback(floater)); // END floater.addEventListener
+
+  floater.addEventListener('mousedown', floaty.makeMousedownCallback(floater)); // END floater.addEventListener
+
+  floater.addEventListener('touchstart', floaty.makeTouchstartCallback(floater), false); // END floater.addEventListener
+
+  floater.addEventListener('mouseup', floaty.makeMouseupCallback(floater)); // END floater.addEventListener
+
+  floater.addEventListener('touchend', floaty.makeMouseupCallback(floater), false); // END floater.addEventListener
+
+  floater.addEventListener('mousemove', floaty.makeMousemoveCallback(floater)); // END floater.addEventListener
+
+  floater.addEventListener('touchmove', floaty.makeTouchmoveCallback(floater), false); // END floater.addEventListener
+};
 
 floaty.pixelToInt = function(measurement){
   var strings = measurement.split('px');
@@ -47,6 +76,9 @@ floaty.makeMousemoveCallback = function(floater){
 
 floaty.makeTouchmoveCallback = function(floater){
   return function(e){
+    // var touch = e.touches[0];
+    // alert(touch.pageX + " - " + touch.pageY);
+    // alert("moved");
     e.preventDefault();
     if (floater.mouse_clicked) {
       floater.updatePosition(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
@@ -54,10 +86,7 @@ floaty.makeTouchmoveCallback = function(floater){
   };
 };
 
-// BEGIN Floaties
-
-floaty.floaty = function(dom_object, id){
-  this.id = id;
+floaty.floaty = function(dom_object){
   this.element = dom_object;
   this.mouse_over = false;
   this.mouse_click = false;
@@ -66,7 +95,10 @@ floaty.floaty = function(dom_object, id){
 
 floaty.floaty.prototype.updatePosition = function(mouseX, mouseY) {
   this.element.style.left = mouseX - (this.element.clientWidth / 2) + 'px';
-  this.element.style.top = mouseY - (this.element.clientHeight / 2) + 'px';
+
+  var height = this.element.clientHeight;
+
+  this.element.style.top = mouseY - (height / 2) + 'px';
 };
 
 floaty.floaty.prototype.addEventListener = function(eventName, callback){
@@ -143,28 +175,11 @@ floaty.floaty.prototype.snapback = function(floater, direction) {
   }
 }
 
-// END Floaties
-
 document.addEventListener('DOMContentLoaded', function(e) {
   var floaties = document.getElementsByClassName('floaty');
 
   for (var i = 0; i < floaties.length; i++){
-    var floater = new floaty.floaty(floaties.item(i), i);
+    floaty.makeFloaty(floaties.item(i));
+  } // END for loop
 
-    floater.addEventListener('mouseover', floaty.makeMouseoverCallback(floater)); // END floater.addEventListener
-
-    floater.addEventListener('mousedown', floaty.makeMousedownCallback(floater)); // END floater.addEventListener
-
-    floater.addEventListener('touchstart', floaty.makeTouchstartCallback(floater), false); // END floater.addEventListener
-
-    floater.addEventListener('mouseup', floaty.makeMouseupCallback(floater)); // END floater.addEventListener
-
-    floater.addEventListener('touchend', floaty.makeMouseupCallback(floater), false); // END floater.addEventListener
-
-    floater.addEventListener('mousemove', floaty.makeMousemoveCallback(floater)); // END floater.addEventListener
-
-    floater.addEventListener('touchmove', floaty.makeTouchmoveCallback(floater), false); // END floater.addEventListener
-
-  }
-
-});
+}); // END document.addEventListener
