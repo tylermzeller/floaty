@@ -1,3 +1,5 @@
+// Author: Tyler Zeller
+
 var floaty = floaty || {};
 
 floaty.pixelToInt = function(measurement){
@@ -18,6 +20,13 @@ floaty.makeMousedownCallback = function(floater){
   };
 };
 
+floaty.makeTouchstartCallback = function(floater){
+  return function(){
+    floater.mouse_clicked = true;
+    floater.addClass('active');
+  };
+};
+
 floaty.makeMouseupCallback = function(floater){
   return function(){
     floater.mouse_clicked = false;
@@ -32,6 +41,15 @@ floaty.makeMousemoveCallback = function(floater){
     e.preventDefault();
     if (floater.mouse_clicked) {
       floater.updatePosition(e.clientX, e.clientY);
+    }
+  };
+};
+
+floaty.makeTouchmoveCallback = function(floater){
+  return function(e){
+    e.preventDefault();
+    if (floater.mouse_clicked) {
+      floater.updatePosition(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
     }
   };
 };
@@ -131,10 +149,16 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
     floater.addEventListener('mousedown', floaty.makeMousedownCallback(floater)); // END floater.addEventListener
 
+    floater.addEventListener('touchstart', floaty.makeTouchstartCallback(floater), false); // END floater.addEventListener
+
     floater.addEventListener('mouseup', floaty.makeMouseupCallback(floater)); // END floater.addEventListener
+
+    floater.addEventListener('touchend', floaty.makeMouseupCallback(floater), false); // END floater.addEventListener
 
     floater.addEventListener('mousemove', floaty.makeMousemoveCallback(floater)); // END floater.addEventListener
 
-  } // END for loop
+    floater.addEventListener('touchmove', floaty.makeTouchmoveCallback(floater), false); // END floater.addEventListener
 
-}); // END document.addEventListener
+  }
+
+});
