@@ -1,10 +1,10 @@
 # Floaty.js
 ## By Tyler Zeller
 
-Floaty is a pure JavaScript library for adding dynamic, floating elements to your webpage. The behavior of the elements that you choose as Floaties is similar to Apple's assistive touch or Facebook's chat head bubbles.
+Floaty is a pure JavaScript, mobile friendly library for adding dynamic, floating elements to your webpage. The behavior of the elements that you choose as Floaties is similar to Apple's assistive touch or Facebook's chat head bubbles.
 ### Demo
 
-View a live demo [here](http://zuuby.io/floaty-demo.html "Floaty Demo").
+View a live demo [here](http://zuuby.io/floaty-demo.html "Floaty Demo"). Works the same on your smartphone or tablet too!
 
 ![Floaty Demo Gif](https://github.com/tylermzeller/floaty/blob/master/floatydemo.gif "Floaty Demo Gif")
 
