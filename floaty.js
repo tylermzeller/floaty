@@ -96,11 +96,11 @@ floaty.floaty.prototype.calcMinDirection = function(){
     min_dir = 'right';
   }
 
-  if (y < height){
+  if (y < 50){
     min_dir = 'top';
   }
 
-  if (window.innerHeight - y < 2 * height) {
+  if (window.innerHeight - y < height + 50) {
     min_dir = 'bottom';
   }
 
