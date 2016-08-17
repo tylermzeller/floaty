@@ -3,32 +3,64 @@ var floaty = floaty || {};
 floaty.pixelToInt = function(measurement){
   var strings = measurement.split('px');
   return parseFloat(strings[0]);
-}
+};
 
-floaty.floaty = function(dom_object){
+floaty.makeMouseoverCallback = function(floater){
+  return function(){
+    floater.mouse_over = true;
+  };
+};
+
+floaty.makeMousedownCallback = function(floater){
+  return function(){
+    floater.mouse_clicked = true;
+    floater.addClass('active');
+  };
+};
+
+floaty.makeMouseupCallback = function(floater){
+  return function(){
+    floater.mouse_clicked = false;
+    floater.removeClass('active');
+    var direction = floater.calcMinDirection();
+    floater.snapback_interval = setInterval(floater.snapback, 10, floater, direction);
+  };
+};
+
+floaty.makeMousemoveCallback = function(floater){
+  return function(e){
+    e.preventDefault();
+    if (floater.mouse_clicked) {
+      floater.updatePosition(e.clientX, e.clientY);
+    }
+  };
+};
+
+floaty.floaty = function(dom_object, id){
+  this.id = id;
   this.element = dom_object;
   this.mouse_over = false;
   this.mouse_click = false;
   this.snapback_interval = null;
-}
+};
 
 floaty.floaty.prototype.updatePosition = function(mouseX, mouseY) {
   this.element.style.left = mouseX - (this.element.clientWidth / 2) + 'px';
   this.element.style.top = mouseY - (this.element.clientHeight / 2) + 'px';
-}
+};
 
 floaty.floaty.prototype.addEventListener = function(eventName, callback){
   this.element.addEventListener(eventName, callback);
-}
+};
 
 floaty.floaty.prototype.removeClass = function(classname){
   var re = new RegExp('(?:^|\\s)' + classname + '(?!\\S)', 'g');
   this.element.className = this.element.className.replace( re , '' );
-}
+};
 
 floaty.floaty.prototype.addClass = function(classname) {
   this.element.className += ' ' + classname;
-}
+};
 
 floaty.floaty.prototype.calcMinDirection = function(){
   var x = floaty.pixelToInt(this.element.style.left);
@@ -90,31 +122,19 @@ floaty.floaty.prototype.snapback = function(floater, direction) {
 }
 
 document.addEventListener('DOMContentLoaded', function(e) {
-   var floater = new floaty.floaty(document.getElementById('floaty'));
+  var floaties = document.getElementsByClassName('floaty');
 
-   floater.addEventListener('mouseover', function(e){
-     floater.mouse_over = true;
-   });
+  for (var i = 0; i < floaties.length; i++){
+    var floater = new floaty.floaty(floaties.item(i), i);
 
-   floater.addEventListener('mousedown', function(e){
-     floater.mouse_clicked = true;
-     floater.addClass('active');
-   });
+    floater.addEventListener('mouseover', floaty.makeMouseoverCallback(floater)); // END floater.addEventListener
 
-   floater.addEventListener('mouseup', function(e){
-     floater.mouse_clicked = false;
-     floater.removeClass('active');
-     var direction = floater.calcMinDirection();
-     floater.snapback_interval = setInterval(floater.snapback, 10, floater, direction);
-   });
+    floater.addEventListener('mousedown', floaty.makeMousedownCallback(floater)); // END floater.addEventListener
 
-  //  floater.addEventListener('mouseout', function(e){
-  //  });
+    floater.addEventListener('mouseup', floaty.makeMouseupCallback(floater)); // END floater.addEventListener
 
-   floater.addEventListener('mousemove', function(e){
-     e.preventDefault();
-     if (floater.mouse_clicked) {
-       floater.updatePosition(e.clientX, e.clientY);
-     }
-   });
-});
+    floater.addEventListener('mousemove', floaty.makeMousemoveCallback(floater)); // END floater.addEventListener
+
+  } // END for loop
+
+}); // END document.addEventListener

@@ -1,4 +1,4 @@
-#floaty {
+.floaty {
   display: block;
   width: 50px;
   height: 50px;
@@ -10,7 +10,7 @@
   z-index: 10000;
 }
 
-#floaty::after{
+.floaty::after{
   content: "";
   display: block;
   width: 50px;
@@ -19,7 +19,7 @@
   margin-top: 0px;
 }
 
-#floaty.active::after {
+.floaty.active::after {
   content: "";
   display: block;
   width: 400px;
