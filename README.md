@@ -10,7 +10,7 @@ View a live demo [here](http://zuuby.io/floaty-demo.html "Floaty Demo"). Works t
 
 ### Quick Start Guide
 
-To use Floaty.js, download floaty.js and floaty.css and add them to your webpage project.
+To use Floaty.js, include floaty.js and floaty.css in your webpage project.
 
 ```
 <script type="text/javascript" src="https://raw.githubusercontent.com/tylermzeller/floaty/master/floaty.js"></script>
@@ -21,5 +21,20 @@ To use Floaty.js, download floaty.js and floaty.css and add them to your webpage
 Then add a `floaty` class to the elements you wish to become Floaties.
 
 `<div class="floaty"></div>`
+
+Currently the only option to customize the appearance of your Floaty is through CSS.
+
+```
+div.floaty {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%; /* circular */
+  background-color: pink;
+  top: 50%; /* Starting y position */
+  left: 0; /* Starting x position */
+}
+```
+
+I'm working on the ability to add Floaties and customize them through JavaScript instead of manually adding them via HTML/CSS.
 
 That's it! Enjoy and have fun!

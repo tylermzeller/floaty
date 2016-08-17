@@ -54,6 +54,8 @@ floaty.makeTouchmoveCallback = function(floater){
   };
 };
 
+// BEGIN Floaties
+
 floaty.floaty = function(dom_object, id){
   this.id = id;
   this.element = dom_object;
@@ -81,6 +83,8 @@ floaty.floaty.prototype.addClass = function(classname) {
 };
 
 floaty.floaty.prototype.calcMinDirection = function(){
+  var height = this.element.clientHeight;
+
   var x = floaty.pixelToInt(this.element.style.left);
   var y = floaty.pixelToInt(this.element.style.top);
 
@@ -92,11 +96,11 @@ floaty.floaty.prototype.calcMinDirection = function(){
     min_dir = 'right';
   }
 
-  if (y < 50){
+  if (y < height){
     min_dir = 'top';
   }
 
-  if (window.innerHeight - y < 100) {
+  if (window.innerHeight - y < 2 * height) {
     min_dir = 'bottom';
   }
 
@@ -138,6 +142,8 @@ floaty.floaty.prototype.snapback = function(floater, direction) {
     floater.element.style.top = y + 'px';
   }
 }
+
+// END Floaties
 
 document.addEventListener('DOMContentLoaded', function(e) {
   var floaties = document.getElementsByClassName('floaty');
