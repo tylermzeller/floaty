@@ -18,8 +18,8 @@ To use Floaty.js, download floaty.js and floaty.css and add them to your webpage
 <link rel="stylesheet" type="text/css" href="https://raw.githubusercontent.com/tylermzeller/floaty/master/floaty.css">
 ```
 
-Then add a `floaty` id to the element you wish to become a Floaty.
+Then add a `floaty` class to the elements you wish to become Floaties.
 
-`<div id="floaty"></div>`
+`<div class="floaty"></div>`
 
-That's it! Notice that currently Floaty.js only works with ids, meaning you may only have one floaty per page. I am working to change this and allow multiple Floaties on a single webpage.
+That's it! Enjoy and have fun!
